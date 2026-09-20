@@ -1,0 +1,53 @@
+{
+  "id": "tabungan-umroh-amirul-insani",
+  "name": "Tabungan Umroh PT Amirul Insani",
+  "short_name": "Tabungan Umroh",
+  "description": "Aplikasi Tabungan Umroh PT Amirul Insani",
+  "lang": "id-ID",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "portrait",
+  "background_color": "#f4f8f6",
+  "theme_color": "#0b1d1c",
+  "categories": ["finance", "lifestyle"],
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Buka Tabungan",
+      "short_name": "Tabungan",
+      "description": "Buka aplikasi Tabungan Umroh",
+      "url": "./",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Panduan Nasabah",
+      "short_name": "Panduan",
+      "description": "Lihat panduan penggunaan aplikasi",
+      "url": "./#panduan",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Setor Tabungan",
+      "short_name": "Setor",
+      "description": "Buka halaman setoran tabungan",
+      "url": "./#setor",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}
