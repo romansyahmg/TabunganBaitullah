@@ -168,17 +168,176 @@ body.panduan-open{overflow:hidden}
 #view-landing .typing-caret{display:inline-block;width:3px;height:.78em;margin-left:5px;border-radius:2px;background:#00a39d;vertical-align:-.04em;animation:typingCaret .78s steps(1,end) infinite}
 @keyframes typingCaret{0%,48%{opacity:1}49%,100%{opacity:0}}
 @media(min-width:640px){#panduan-modal .guide-sheet{max-height:calc(100vh - 40px)}}
-/* Responsive desktop + mobile: satu layout ringan, tanpa duplikasi halaman */
-@media(max-width:767px){
-  #app{width:100%;max-width:100%;margin:0;border-radius:0;box-shadow:none}
-  #view-home .px-5.pt-5{padding-left:18px;padding-right:18px}
+/* ================================================================
+   UI/UX RESPONSIF v2 — Ponsel (diperbarui) • Tablet • Laptop
+   Satu markup untuk semua layar, tanpa duplikasi halaman.
+   Breakpoint: <768 ponsel | 768–1023 tablet | >=1024 laptop
+   ================================================================ */
+
+/* ---------- Fondasi: semua ukuran layar ---------- */
+html{scroll-behavior:smooth}
+::selection{background:rgba(0,163,157,.22)}
+#app button,#app a,#app label,#app summary{touch-action:manipulation}
+#app :focus-visible{outline:2px solid #00a39d;outline-offset:2px}
+/* Perangkat dengan mouse/trackpad (laptop): kursor, scrollbar, hover */
+@media(hover:hover) and (pointer:fine){
+  html{scrollbar-width:thin;scrollbar-color:#c3d2ce transparent}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:#c3d2ce;border-radius:8px;border:2px solid #eef3f1}
+  ::-webkit-scrollbar-track{background:transparent}
+  #app button:not([disabled]),#app a,#app summary{cursor:pointer}
+  #view-home #tx-list>div,#view-admin .admin-tab>div>div,#history-content>article{transition:transform .18s ease,box-shadow .18s ease}
+  #view-home #tx-list>div:hover,#view-admin .admin-tab>div>div:hover,#history-content>article:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(11,29,28,.10)}
 }
-@media(min-width:900px){
-  #app{max-width:1180px;border-radius:32px}
-  #view-landing .home-bg-content{width:100%;max-width:720px;margin:0 auto}
-  #view-home .px-5.pt-5{max-width:1120px;margin:0 auto;padding:28px 30px;display:grid;grid-template-columns:minmax(0,1.18fr) minmax(320px,.82fr);gap:20px}
-  #view-home .px-5.pt-5>*{margin-top:0!important}
-  #view-home .px-5.pt-5>:nth-child(6){grid-column:1/-1}
+
+/* ---------- PONSEL <768px (diperbarui) ---------- */
+@media(max-width:767px){
+  #app{width:100%;max-width:100%;margin:0;border-radius:0;border:0;box-shadow:none}
+  /* Tinggi layar dinamis: tampilan tidak meloncat saat address bar muncul/hilang */
+  #app .min-h-screen{min-height:100vh;min-height:100dvh}
+  #panduan-modal .guide-sheet{max-height:94dvh}
+  /* Cegah zoom otomatis iOS ketika fokus ke form (font <16px) */
+  #app input:not(.otp-box):not([type="checkbox"]):not([type="file"]),
+  #app select,#app textarea{font-size:16px}
+  #app #setor-nom,#app #tarik-nom{font-size:22px}
+  /* Area aman: poni/notch di atas, home-indicator di bawah */
+  #toast{bottom:calc(20px + env(safe-area-inset-bottom,0px))}
+  #panduan-modal .guide-sheet{padding-bottom:env(safe-area-inset-bottom,0px)}
+  #view-landing .landing-shell.relative.z-10.px-6{padding-top:calc(28px + env(safe-area-inset-top,0px))}
+  #view-home .sticky,#view-admin-history header{height:calc(72px + env(safe-area-inset-top,0px));padding-top:env(safe-area-inset-top,0px)}
+  #view-syarat .sticky>div{height:calc(72px + env(safe-area-inset-top,0px));padding-top:env(safe-area-inset-top,0px)}
+  #view-admin .sticky>div{height:calc(68px + env(safe-area-inset-top,0px));padding-top:env(safe-area-inset-top,0px)}
+  #view-login .sticky>div,#view-register .sticky>div,#view-setor .sticky>div,#view-tarik .sticky>div,#view-profil .sticky>div{height:calc(64px + env(safe-area-inset-top,0px));padding-top:env(safe-area-inset-top,0px)}
+  /* Target sentuh minimum 44px pada kontrol utama */
+  #view-admin .admin-tab-btn{min-height:44px;white-space:nowrap;padding-left:14px;padding-right:14px}
+  #history-filters button{min-height:44px}
+  /* Tab admin dapat digeser menyamping di layar sangat sempit */
+  #view-admin .admin-tabbar{overflow-x:auto;scrollbar-width:none}
+  #view-admin .admin-tabbar::-webkit-scrollbar{display:none}
+  #view-home .home-shell.px-5.pt-5{padding-left:18px;padding-right:18px}
+  /* Rapikan jarak riwayat: hilangkan margin ganda (space-y + mb pada kartu) */
+  #view-home #tx-list>div{margin-bottom:0}
+}
+
+/* ---------- TABLET 768–1023px ---------- */
+@media(min-width:768px) and (max-width:1023px){
+  #app{max-width:700px}
+  #view-landing .home-bg-content{width:100%;max-width:640px;margin:0 auto}
+  #view-home .home-shell.px-5.pt-5{padding-left:26px;padding-right:26px}
+  #view-admin .admin-shell{max-width:640px}
+  #view-setor .setor-shell,#view-tarik .tarik-shell,#view-profil .profil-shell,#view-register .reg-shell{max-width:560px}
+  #view-syarat .syarat-shell{max-width:640px}
+}
+
+/* ---------- LAPTOP >=1024px ---------- */
+@media(min-width:1024px){
+  #app{max-width:1220px}
+  /* Notifikasi pindah ke pojok kanan bawah seperti aplikasi desktop */
+  #toast{left:auto;right:30px;bottom:30px;transform:none;max-width:380px}
+  #panduan-modal .guide-sheet{max-width:660px}
+
+  /* Header sticky sejajar dengan kolom konten */
+  #view-home .sticky{padding-left:max(30px,calc((100% - 1120px)/2 + 30px));padding-right:max(30px,calc((100% - 1120px)/2 + 30px))}
+  #view-admin .sticky>div{padding-left:max(30px,calc((100% - 1120px)/2 + 30px));padding-right:max(30px,calc((100% - 1120px)/2 + 30px))}
+  #view-admin-history header{padding-left:max(30px,calc((100% - 1180px)/2 + 30px));padding-right:max(30px,calc((100% - 1180px)/2 + 30px))}
+  #view-home #u-nama{max-width:280px}
+
+  /* --- Landing: hero dua kolom --- */
+  #view-landing .home-bg-content{width:100%;max-width:1160px;margin:0 auto}
+  #view-landing .landing-shell{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);grid-template-rows:auto auto auto auto auto 1fr;grid-template-areas:"top top" "badge trust" "head trust" "guide trust" "install trust" "cta trust";gap:16px 46px;align-items:start}
+  #view-landing .landing-shell.relative.z-10.px-6{padding:36px 42px 42px}
+  #view-landing .landing-shell>*{margin-top:0}
+  #view-landing .landing-shell>:nth-child(1){grid-area:top}
+  #view-landing .landing-shell>:nth-child(2){grid-area:badge;justify-content:flex-start}
+  #view-landing .landing-shell>:nth-child(3){grid-area:head}
+  #view-landing .landing-shell>:nth-child(4){grid-area:trust}
+  #view-landing .landing-shell>:nth-child(5){grid-area:guide}
+  #view-landing .landing-shell>:nth-child(6){grid-area:install}
+  #view-landing .landing-shell>:nth-child(7){grid-area:cta;align-self:end}
+  #view-landing h1{font-size:clamp(50px,4.6vw,64px)}
+  #view-landing #landing-typing-title span[class*="text-[32px]"]{font-size:38px}
+
+  /* --- Login: kartu terpusat vertikal --- */
+  #view-login .min-h-screen>.flex-1{display:flex;align-items:center;padding-top:44px;padding-bottom:52px}
+  #view-login .login-shell{max-width:440px;width:100%}
+
+  /* --- Register: form dua kolom --- */
+  #view-register .px-6.py-6{padding:30px}
+  #view-register .reg-shell{max-width:780px}
+  #view-register .reg-shell>div{padding:32px}
+  #form-reg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+  #form-reg>*{margin-top:0}
+  #form-reg>:nth-child(1),#form-reg>:nth-child(2),#form-reg>:nth-child(3),#form-reg>:nth-child(8){grid-column:1/-1}
+
+  /* --- Beranda: dashboard dua kolom + riwayat grid --- */
+  #view-home .home-shell.px-5.pt-5{max-width:1120px;margin:0 auto;padding:30px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:22px;align-items:start}
+  #view-home .home-shell>*{margin-top:0!important}
+  #view-home .home-shell>:nth-child(1){grid-column:1}
+  #view-home .home-shell>:nth-child(2){grid-column:2;grid-row:1}
+  #view-home .home-shell>:nth-child(3){grid-column:1}
+  #view-home .home-shell>:nth-child(4){grid-column:2}
+  #view-home .home-shell>:nth-child(5){grid-column:1/-1}
+  #view-home #u-saldo{font-size:36px}
+  #view-home .home-shell .grid.grid-cols-2 button{min-height:104px}
+  #view-home #tx-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  #view-home #tx-list>*{margin:0}
+  #view-home #tx-list>*:only-child{grid-column:1/-1}
+
+  /* --- Setor: info rekening di kiri, form di kanan --- */
+  #view-setor .px-6.py-6{padding:30px}
+  #view-setor .setor-shell{max-width:1000px;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:20px;align-items:start}
+  #view-setor .setor-shell>*{margin-top:0!important}
+
+  /* --- Tarik: form lebih lebar & lega --- */
+  #view-tarik .px-6.py-6{padding:30px}
+  #view-tarik .tarik-shell{max-width:620px}
+
+  /* --- Profil: kartu profil di kiri, detail di kanan --- */
+  #view-profil .px-6.pt-6{padding:30px}
+  #view-profil .profil-shell{max-width:1080px;display:grid;grid-template-columns:360px minmax(0,1fr);gap:20px;align-items:start}
+  #view-profil .profil-shell>*{margin-top:0!important}
+  #view-profil .profil-shell>:nth-child(1){grid-row:span 3}
+  #view-profil .profil-shell>:nth-child(5){grid-column:1/-1}
+
+  /* --- Syarat: kolom baca nyaman --- */
+  #view-syarat .px-5.py-5{padding:28px 30px}
+  #view-syarat .syarat-shell{max-width:840px}
+
+  /* --- Panel Admin: statistik + ringkasan berdampingan, daftar kartu grid --- */
+  #view-admin .px-5.py-5{padding:26px 30px 36px}
+  #view-admin .admin-shell{max-width:1120px;display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:18px;align-items:start}
+  #view-admin .admin-shell>*{margin-top:0!important}
+  #view-admin #admin-stats{grid-column:1}
+  #view-admin #admin-chart{grid-column:2;grid-row:1}
+  #view-admin .admin-tabbar{grid-column:1/-1}
+  #view-admin .admin-tab{grid-column:1/-1}
+  #view-admin .admin-tab-btn{height:46px;font-size:13px}
+  #view-admin .admin-tab>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+  #view-admin .admin-tab>div>*{margin:0}
+  #view-admin .admin-tab>div>*:only-child{grid-column:1/-1}
+
+  /* --- Riwayat nasabah (admin): ringkasan berdampingan, daftar 2 kolom --- */
+  #view-admin-history .history-shell{max-width:1180px;margin:0 auto;padding:28px 30px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+  #view-admin-history .history-shell>*{margin-top:0!important}
+  #view-admin-history .history-shell>:nth-child(2){grid-column:2;grid-row:1}
+  #view-admin-history .history-shell>:nth-child(n+3){grid-column:1/-1}
+  #history-filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+  #history-filters>*{margin-top:0}
+  #history-filters>:nth-child(1){grid-column:1/-1}
+  #history-content{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+  #history-content>*{margin:0}
+  #history-content>*:only-child{grid-column:1/-1}
+}
+
+/* ---------- LAPTOP LEBAR >=1280px: daftar menjadi 3 kolom ---------- */
+@media(min-width:1280px){
+  #view-admin .admin-tab>div{grid-template-columns:repeat(3,minmax(0,1fr))}
+  #view-home #tx-list{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+/* ---------- LAYAR SANGAT LEBAR >=1440px ---------- */
+@media(min-width:1440px){
+  #app{max-width:1280px}
 }
 @media(prefers-reduced-motion:reduce){#app *,#panduan-modal *{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 </style>
@@ -270,7 +429,7 @@ body.panduan-open{overflow:hidden}
     <div class="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-[#fbfcfa]/25 pointer-events-none z-0"></div>
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[520px] bg-gradient-to-br from-teal-500/[.08] via-gold/[.08] to-transparent rounded-full blur-[80px] pointer-events-none"></div>
 
-    <div class="relative z-10 px-6 pt-6 pb-7 flex-1 flex flex-col">
+    <div class="relative z-10 px-6 pt-6 pb-7 flex-1 flex flex-col landing-shell">
       <!-- Topbar Profesional -->
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
@@ -366,7 +525,7 @@ body.panduan-open{overflow:hidden}
     <div class="sticky top-0 z-20 backdrop-blur-[16px] bg-[#fbfcfa]/80 border-b border-line">
       <div class="px-6 h-[64px] flex items-center justify-between"><button onclick="go('view-landing')" class="w-10 h-10 rounded-full bg-white border border-line shadow-soft flex items-center justify-center tap"><i class="fa-solid fa-arrow-left text-[13px]"></i></button><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-white border border-line shadow-soft flex items-center justify-center p-1"><img src="https://amirulinsani.com/_next/image?url=%2Fimages%2Flogo%2FAMIRUL.png&w=256&q=75" class="w-full h-full object-contain" /></div><span class="text-[11px] font-bold tracking-widest">MASUK AMAN</span></div><div class="w-10 h-10"></div></div>
     </div>
-    <div class="flex-1 px-6 pt-8 pb-10"><div class="max-w-[380px] mx-auto">
+    <div class="flex-1 px-6 pt-8 pb-10"><div class="max-w-[380px] mx-auto login-shell">
       <div class="text-center">
         <div class="w-[76px] h-[76px] mx-auto rounded-[22px] bg-white border border-line shadow-card flex items-center justify-center p-2.5"><img src="https://amirulinsani.com/_next/image?url=%2Fimages%2Flogo%2FAMIRUL.png&w=256&q=75" class="w-full h-full object-contain" /></div>
         <h2 class="mt-5 font-display font-extrabold text-[28px] tracking-[-0.03em]">Masuk Amanah</h2><p class="mt-1.5 text-[13px] text-muted">OTP WhatsApp • Kata Sandi • Token Admin</p>
@@ -459,7 +618,7 @@ body.panduan-open{overflow:hidden}
         <div class="w-10 h-10 rounded-[12px] bg-ink text-white flex items-center justify-center"><i class="fa-solid fa-file-contract text-[13px]"></i></div>
       </div>
     </div>
-    <div class="px-5 py-5"><div class="max-w-[560px] mx-auto space-y-4">
+    <div class="px-5 py-5"><div class="max-w-[560px] mx-auto space-y-4 syarat-shell">
       
       <div id="syarat-articles" class="space-y-4">
       <div class="rounded-[24px] bg-ink text-white p-[1px] shadow-card"><div class="rounded-[23px] bg-gradient-to-br from-ink via-ink2 to-[#0f5d59] p-5">
@@ -861,7 +1020,7 @@ body.panduan-open{overflow:hidden}
     <div class="sticky top-0 z-20 backdrop-blur-[16px] bg-[#fbfcfa]/80 border-b border-line">
       <div class="px-6 h-[64px] flex items-center gap-3"><button onclick="go('view-landing')" class="w-10 h-10 rounded-full bg-white border border-line shadow-soft flex items-center justify-center tap"><i class="fa-solid fa-arrow-left"></i></button><div><p class="font-display font-bold text-[14px]">Buka Rekening Baru</p><p class="text-[11px] text-muted">Isi form • Ceklis syarat • Submit • Tunggu approve</p></div><div class="ml-auto px-2.5 py-1 rounded-full bg-teal-50 border border-teal-100 text-teal-700 text-[10px] font-bold">GRATIS</div></div>
     </div>
-    <div class="px-6 py-6"><div class="max-w-[440px] mx-auto space-y-4">
+    <div class="px-6 py-6"><div class="max-w-[440px] mx-auto space-y-4 reg-shell">
       <div class="rounded-[28px] bg-white border border-line shadow-card p-6">
         <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-ink text-white flex items-center justify-center"><i class="fa-solid fa-id-card text-[11px]"></i></div><p class="font-display font-bold text-[14px]">Data Jamaah Lengkap</p><span class="ml-auto text-[10px] px-2 py-1 rounded-full bg-sand border font-bold">Wajib KTP</span></div>
         <form id="form-reg" onsubmit="register(event)" class="mt-5 space-y-4">
@@ -928,7 +1087,7 @@ body.panduan-open{overflow:hidden}
       </button>
     </div>
 
-    <div class="px-5 pt-5 space-y-5">
+    <div class="px-5 pt-5 space-y-5 home-shell">
       <!-- Saldo Card -->
       <div class="rounded-[24px] bg-ink text-white p-[1px] shadow-card">
         <div class="rounded-[23px] bg-gradient-to-br from-ink via-ink2 to-[#0f5d59] p-5">
@@ -1016,7 +1175,7 @@ body.panduan-open{overflow:hidden}
         <div><p class="font-display font-bold text-[14px]">Setor Tabungan Amanah</p><p class="text-[11px] text-muted">Target: <span id="setor-target-info" class="font-bold text-ink">Umroh 30jt</span> • Folder GDrive aman</p></div>
       </div>
     </div>
-    <div class="px-6 py-6"><div class="max-w-[440px] mx-auto space-y-4">
+    <div class="px-6 py-6"><div class="max-w-[440px] mx-auto space-y-4 setor-shell">
       <div class="rounded-[20px] bg-ink text-white p-[1px] shadow-card"><div class="rounded-[19px] bg-gradient-to-br from-ink to-ink2 p-4"><div class="flex items-center justify-between"><p class="text-[10px] tracking-widest font-bold text-white/50 uppercase">Rekening Tujuan</p><span class="px-2 py-1 rounded-full bg-white/10 border border-white/15 text-white/70 text-[10px] font-bold">BSI Syariah</span></div><div id="rekening-info" class="mt-3"><div class="rounded-[14px] bg-white/10 border border-white/10 p-3.5 flex justify-between items-center"><div><p id="rek-bank-label" class="text-[10px] text-white/50 uppercase tracking-wide font-bold">Bank Syariah Indonesia</p><p id="rek-no" class="mt-1 font-mono font-bold text-[16px] tracking-wide">Memuat...</p><p id="rek-an" class="mt-1 text-[11px] text-white/70">PT AMIRUL INSANI<span class="font-mono text-[10px]"></span></p></div><button onclick="copyRek()" class="w-10 h-10 rounded-full bg-white text-ink flex items-center justify-center tap"><i class="fa-regular fa-copy text-[13px]"></i></button></div></div></div></div>
       <div class="rounded-[24px] bg-white border border-line shadow-soft p-5"><form id="form-setor" onsubmit="setor(event)" class="space-y-4"><div><label class="text-[11px] font-bold tracking-wide text-muted uppercase">Nominal Setoran</label><div class="mt-2 relative"><span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-[15px] font-bold text-muted">Rp</span><input id="setor-nom" type="number" required placeholder="0" class="w-full h-[60px] pl-12 pr-4 rounded-[14px] border border-line bg-sand focus:bg-white text-[22px] font-extrabold outline-none focus:border-teal-500" /></div><div class="mt-2.5 grid grid-cols-4 gap-2"><button type="button" onclick="setNom(100000)" class="h-9 rounded-full bg-sand border border-line text-[11px] font-bold tap">100rb</button><button type="button" onclick="setNom(250000)" class="h-9 rounded-full bg-sand border border-line text-[11px] font-bold tap">250rb</button><button type="button" onclick="setNom(500000)" class="h-9 rounded-full bg-ink text-white text-[11px] font-bold tap">500rb</button><button type="button" onclick="setNom(1000000)" class="h-9 rounded-full bg-sand border border-line text-[11px] font-bold tap">1jt</button></div></div><div><label class="text-[11px] font-bold tracking-wide text-muted uppercase">Keterangan (Opsional)</label><input id="setor-ket" placeholder="Tabungan umroh bulan ini" class="input mt-2 w-full h-[48px] px-4 rounded-[12px] border border-line bg-sand outline-none text-[14px]" /></div><div><label class="text-[11px] font-bold tracking-wide text-muted uppercase">Upload Bukti Transfer • Wajib</label><div class="mt-2 relative rounded-[16px] border-2 border-dashed border-teal-200 bg-teal-50/40 p-4 flex flex-col items-center hover:border-teal-300 transition"><input id="setor-bukti" type="file" accept="image/*,application/pdf" required class="absolute inset-0 opacity-0 cursor-pointer z-10" onchange="buktiPreview(this)" /><div id="bukti-ph" class="flex flex-col items-center pointer-events-none"><div class="w-12 h-12 rounded-[14px] bg-white border border-line shadow-soft flex items-center justify-center text-teal-600"><i class="fa-solid fa-cloud-arrow-up text-[16px]"></i></div><p class="mt-2.5 font-display font-bold text-[12px]">Klik untuk upload bukti</p><p class="text-[11px] text-muted mt-0.5">JPG/PNG/PDF max 5MB • Folder ID 1chmFu…</p></div><div id="bukti-prev" class="hidden w-full"><img id="bukti-img" class="w-full max-h-[220px] object-contain rounded-[12px] border border-line bg-white mx-auto" /><p id="bukti-name" class="mt-2 text-[11px] font-semibold text-center"></p></div></div></div><button type="submit" class="tap w-full h-[52px] rounded-[14px] bg-ink text-white font-bold text-[14px] shadow-float">Kirim Setoran • Amanah</button></form></div>
     </div></div>
@@ -1032,7 +1191,7 @@ body.panduan-open{overflow:hidden}
         <div><p class="font-display font-bold text-[14px]">Tarik Tabungan</p><p class="text-[11px] text-muted">Saldo: <span id="tarik-saldo" class="font-bold text-ink">Rp 0</span> • Verifikasi petugas</p></div>
       </div>
     </div>
-    <div class="px-6 py-6"><div class="max-w-[440px] mx-auto"><div class="rounded-[24px] bg-white border border-line shadow-soft p-6"><form id="form-tarik" onsubmit="tarik(event)" class="space-y-4"><div><label class="text-[11px] font-bold tracking-wide text-muted uppercase">Nominal Penarikan</label><div class="mt-2 relative"><span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-muted">Rp</span><input id="tarik-nom" type="number" required class="w-full h-[60px] pl-11 pr-[72px] rounded-[14px] border border-line bg-sand focus:bg-white text-[22px] font-extrabold outline-none" /><button type="button" onclick="setMax()" class="absolute right-1.5 top-1/2 -translate-y-1/2 h-[42px] px-4 rounded-[10px] bg-ink text-white text-[11px] font-bold tap">MAX</button></div></div><div class="grid grid-cols-2 gap-3"><div><label class="text-[11px] font-bold uppercase text-muted">Metode</label><select id="tarik-metode" class="mt-2 w-full h-[48px] px-3 rounded-[12px] border border-line bg-sand text-[14px] outline-none"><option />Transfer BSI<option />Transfer BCA<option />Tunai di Kantor</select></div><div><label class="text-[11px] font-bold uppercase text-muted">Keperluan</label><select id="tarik-alasan" class="mt-2 w-full h-[48px] px-3 rounded-[12px] border border-line bg-sand text-[14px] outline-none"><option />Kebutuhan<option />Darurat<option />Biaya Umroh</select></div></div><div class="rounded-[14px] bg-amber-50 border border-amber-100 p-3 flex gap-2"><i class="fa-solid fa-circle-info text-amber-600 text-[11px] mt-0.5"></i><p class="text-[11px] leading-[1.5] text-amber-900">Penarikan diverifikasi petugas. Dana ditransfer max 1x24 jam.</p></div><button type="submit" class="tap w-full h-[52px] rounded-[14px] bg-ink text-white font-bold text-[14px]">Ajukan Penarikan</button></form></div></div></div>
+    <div class="px-6 py-6"><div class="max-w-[440px] mx-auto tarik-shell"><div class="rounded-[24px] bg-white border border-line shadow-soft p-6"><form id="form-tarik" onsubmit="tarik(event)" class="space-y-4"><div><label class="text-[11px] font-bold tracking-wide text-muted uppercase">Nominal Penarikan</label><div class="mt-2 relative"><span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-muted">Rp</span><input id="tarik-nom" type="number" required class="w-full h-[60px] pl-11 pr-[72px] rounded-[14px] border border-line bg-sand focus:bg-white text-[22px] font-extrabold outline-none" /><button type="button" onclick="setMax()" class="absolute right-1.5 top-1/2 -translate-y-1/2 h-[42px] px-4 rounded-[10px] bg-ink text-white text-[11px] font-bold tap">MAX</button></div></div><div class="grid grid-cols-2 gap-3"><div><label class="text-[11px] font-bold uppercase text-muted">Metode</label><select id="tarik-metode" class="mt-2 w-full h-[48px] px-3 rounded-[12px] border border-line bg-sand text-[14px] outline-none"><option />Transfer BSI<option />Transfer BCA<option />Tunai di Kantor</select></div><div><label class="text-[11px] font-bold uppercase text-muted">Keperluan</label><select id="tarik-alasan" class="mt-2 w-full h-[48px] px-3 rounded-[12px] border border-line bg-sand text-[14px] outline-none"><option />Kebutuhan<option />Darurat<option />Biaya Umroh</select></div></div><div class="rounded-[14px] bg-amber-50 border border-amber-100 p-3 flex gap-2"><i class="fa-solid fa-circle-info text-amber-600 text-[11px] mt-0.5"></i><p class="text-[11px] leading-[1.5] text-amber-900">Penarikan diverifikasi petugas. Dana ditransfer max 1x24 jam.</p></div><button type="submit" class="tap w-full h-[52px] rounded-[14px] bg-ink text-white font-bold text-[14px]">Ajukan Penarikan</button></form></div></div></div>
   </div>
 </div>
 
@@ -1045,7 +1204,7 @@ body.panduan-open{overflow:hidden}
         <div class="w-10 h-10 rounded-[12px] bg-white border border-line shadow-soft flex items-center justify-center p-1"><img src="https://amirulinsani.com/_next/image?url=%2Fimages%2Flogo%2FAMIRUL.png&w=256&q=75" class="w-full h-full object-contain" /></div>
       </div>
     </div>
-    <div class="px-6 pt-6"><div class="max-w-[440px] mx-auto space-y-4">
+    <div class="px-6 pt-6"><div class="max-w-[440px] mx-auto space-y-4 profil-shell">
       <div class="rounded-[28px] bg-white border border-line shadow-card p-6 text-center">
         <div class="relative w-[112px] h-[112px] mx-auto">
           <div id="p-foto-wrapper" class="w-[112px] h-[112px] rounded-full bg-gradient-to-br from-sand to-white border-[3px] border-white shadow-card overflow-hidden flex items-center justify-center p-1">
@@ -1091,14 +1250,14 @@ body.panduan-open{overflow:hidden}
     <div class="sticky top-0 z-20 backdrop-blur-[16px] bg-[#fbfcfa]/80 border-b border-line">
       <div class="px-6 h-[68px] flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-[12px] bg-ink text-white flex items-center justify-center"><i class="fa-solid fa-shield-halved text-[13px]"></i></div><div><p class="font-display font-bold text-[14px] tracking-[-0.01em]">Panel Petugas Profesional</p><p class="text-[11px] text-muted">Semua data jamaah • Foto & Target • Akses petugas</p></div></div><div class="flex items-center gap-2"><button onclick="loadAdminPanel()" class="w-9 h-9 rounded-full bg-white border border-line shadow-soft flex items-center justify-center tap"><i class="fa-solid fa-rotate-right text-[12px]"></i></button><button onclick="logout()" class="w-9 h-9 rounded-full bg-ink text-white flex items-center justify-center tap"><i class="fa-solid fa-right-from-bracket text-[11px]"></i></button></div></div>
     </div>
-    <div class="px-5 py-5"><div class="max-w-[560px] mx-auto space-y-4">
+    <div class="px-5 py-5"><div class="max-w-[560px] mx-auto space-y-4 admin-shell">
       <div id="admin-stats" class="grid grid-cols-2 gap-3"></div>
       <div id="admin-chart" class="rounded-[20px] bg-white border border-line shadow-soft p-5">
         <div class="flex items-center justify-between"><div><p class="text-[10px] font-bold tracking-widest uppercase text-muted">Ringkasan Aktivitas</p><h3 class="mt-1 font-display font-bold text-[14px]">Informasi transaksi & nasabah</h3></div><span class="w-9 h-9 rounded-full bg-teal-50 text-teal-700 flex items-center justify-center"><i class="fa-solid fa-chart-column text-[13px]"></i></span></div>
         <div id="admin-chart-bars" class="mt-5 space-y-3"></div>
         <div id="admin-chart-legend" class="mt-4 grid grid-cols-3 gap-2 text-center"></div>
       </div>
-      <div class="rounded-[16px] bg-white border border-line shadow-soft p-1.5 flex gap-1.5">
+      <div class="rounded-[16px] bg-white border border-line shadow-soft p-1.5 flex gap-1.5 admin-tabbar">
         <button id="btn-admin-pending" onclick="switchAdminTab('admin-pending')" class="admin-tab-btn flex-1 h-10 rounded-[12px] bg-ink text-white text-[12px] font-bold">Menunggu</button>
         <button id="btn-admin-setor" onclick="switchAdminTab('admin-setor')" class="admin-tab-btn flex-1 h-10 rounded-[12px] text-muted text-[12px] font-bold">Setoran</button>
         <button id="btn-admin-tarik" onclick="switchAdminTab('admin-tarik')" class="admin-tab-btn flex-1 h-10 rounded-[12px] text-muted text-[12px] font-bold">Penarikan</button>
@@ -1120,7 +1279,7 @@ body.panduan-open{overflow:hidden}
       <div class="flex-1"><p class="text-[10px] tracking-widest uppercase text-muted font-bold">Panel petugas</p><h2 class="font-display font-bold text-[16px]">Riwayat transaksi nasabah</h2></div>
       <button type="button" id="history-refresh" onclick="refreshAdminUserHistory()" aria-label="Muat ulang riwayat" class="w-10 h-10 rounded-full border border-line bg-white tap"><i class="fa-solid fa-rotate-right"></i></button>
     </header>
-    <div class="p-5 space-y-4">
+    <div class="p-5 space-y-4 history-shell">
       <section class="rounded-[24px] bg-ink text-white p-5">
         <div class="flex gap-3 items-center"><img id="history-user-photo" alt="Foto nasabah" class="w-12 h-12 rounded-[14px] object-cover bg-white/10" /><div class="flex-1 min-w-0"><h3 id="history-user-name" class="font-display font-bold truncate">—</h3><p id="history-user-phone" class="text-[12px] text-white/65 mt-1">—</p></div></div>
         <p class="mt-5 text-[10px] text-white/60 tracking-widest uppercase font-bold">Saldo nasabah saat data dimuat</p><p id="history-user-balance" class="mt-1 font-display font-extrabold text-[27px]">—</p>
