@@ -1614,7 +1614,7 @@ async function apiFetch(url,options={}){
   const apiEndpoint=String(API_URL||'').trim();
   if(!/^https?:\/\//i.test(apiEndpoint)) throw new Error('URL API backend belum diisi. Isi API_URL dengan URL Cloudflare Worker atau endpoint API HTTPS Anda.');
   let apiBase,parsed;
-  try{apiBase=new URL(apiEndpoint);parsed=new URL(url||apiEndpoint,apiBase);}catch(_){throw new Error('API_URL tidak valid. Gunakan URL lengkap HTTPS, contoh https://nama-worker.nama-akun.workers.dev.');}
+  try{apiBase=new URL(apiEndpoint);parsed=new URL(url||apiEndpoint,apiBase);}catch(_){throw new Error('https://api-tabuungan-baitullah.mg-romansyah.workers.dev/. Gunakan URL lengkap HTTPS, contoh https://nama-worker.nama-akun.workers.dev.');}
   if(apiBase.protocol!=='https:' || parsed.origin!==apiBase.origin || parsed.pathname!==apiBase.pathname) throw new Error('Endpoint API tidak diizinkan');
   const payload=Object.fromEntries(parsed.searchParams.entries());
   if(options.body) Object.assign(payload,JSON.parse(options.body));
